@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f0f23 60%, #2d1810 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        header {
+            padding: 0 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .menu-icon {
+            display: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            margin: 0;
+            padding: 0;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo img {
+            width: 45px;
+            height: auto;
+            padding: 0;
+            margin: 0;
+            margin-right: 25px;
+            display: block;
+            float: left;
+            border-radius: 5px;
+        }
+
+        .logo p {
+            font-size: 1rem;
+            color: #a2d2f2;
+            text-align: center;
+            padding-left: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(231, 76, 60, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .admin-name {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .login-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes moveGrid {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 140, 66, 0.08);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        .shape1 {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            top: 50%;
+            left: 70%;
+            animation-delay: 2s;
+        }
+
+        .shape3 {
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .shape4 {
+            top: 90%;
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .content {
+            min-height: 50vh;
+            justify-content: space-around;
+            text-align: center;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-top: 11rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #e74c3c;
+            text-shadow: 0 0 5px #a2d2f2bd, 0 0 10px #a2d2f2bd, 0 0 15px #a2d2f2bd;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card {
+            width: 300px;
+            height: 200px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(99, 72, 221, 0.801);
+            transition: 0.4s ease-in-out;
+            border: 1px solid #e74c3c;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h5 {
+            color: aqua;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            padding: 20px;
+            color: #e0e2e7;
+            font-size: 20px;
+        }
+
+        .card a {
+            text-decoration: none;
+            border-radius: 20px;
+            padding: 10px 10px;
+            color: whitesmoke;
+            border: 1px solid #a2d2f2;
+        }
+
+        #manage-btn:hover {
+            transition: translateY(2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            background-color: #a2d2f27b;
+        }
+
+        .admin-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 2rem;
+            ;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            font-size: 2em;
+            color: #e74c3c;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .section-content {
+            margin-bottom: 20px;
+        }
+
+        .action-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .action-list li {
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .action-list li:last-child {
+            border-bottom: none;
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .section-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+        }
+
+        .action-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .button-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 1200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #e74c3c;
+            transform: scale(1.2);
+        }
+
+        .modal-title {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-table th {
+            background: rgba(231, 76, 60, 0.3);
+            color: white;
+            font-weight: bold;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .status-pending {
+            color: #f39c12;
+        }
+
+        .status-replied {
+            color: #27ae60;
+        }
+
+        .status-closed {
+            color: #7f8c8d;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-status {
+            background: #2ecc71;
+            color: white;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .alert-success {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+        }
+
+        .alert-danger {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            color: #e74c3c;
+        }
+
+        .alert-warning {
+            background: rgba(243, 156, 18, 0.2);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            color: #f39c12;
+        }
+
+        .alert-info {
+            background: rgba(52, 152, 219, 0.2);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            color: #3498db;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Responsive Styles */
+        @media screen and (min-width:200px) and (max-width: 768px) {
+
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                overflow-x: hidden;
+            }
+
+            header {
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            .menu-icon {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                font-size: 1.7rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100px;
+                background-color: #072370c1;
+                width: 100%;
+                left: 0;
+                padding: 20px;
+                z-index: 1000;
+            }
+
+            .login-content {
+                width: 95%;
+                padding: 2rem;
+            }
+
+            .dashboard-header {
+                margin-top: 8rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard-header p {
+                padding: 12px;
+            }
+
+            .content {
+                padding: 0;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+            }
+
+            .card {
+                width: 10rem;
+                height: 10rem;
+            }
+
+            .card h5 {
+                margin-top: 1rem;
+                text-align: center;
+                font-size: 1.1rem;
+            }
+
+            .icon {
+                font-size: 2.8em;
+                margin-bottom: 0 auto;
+            }
+
+            .card p {
+                padding: 0;
+                margin: 1rem auto;
+                font-size: 1.1rem;
+            }
+
+            .admin-sections {
+                margin: 1rem;
+            }
+
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+
+            .data-table {
+                font-size: 14px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-background"></div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="floating-shapes shape1"></div>
+        <div class="floating-shapes shape2"></div>
+        <div class="floating-shapes shape3"></div>
+        <div class="floating-shapes shape4"></div>
+    </div>
+
+    <header class="glass">
+        <nav>
+            <div class="logo"><img src="/static/chimney.JPG" alt="Logo"> Rupa Chimney <br>
+                <p>Sikandra, Jamui (811315)</p>
+            </div>
+            <div class="nav-links">
+                <a href="/">🏠Home</a>
+                <a href="/about">About</a>
+                <a href="/service">Service</a>
+                <a href="/contact">Contact Us</a>
+                <div class="admin-info">
+                    <span>👤</span>
+                    <span class="admin-name" id="adminName">{{Administrator}}</span>
+                    <button class="login-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        </nav>
+    </header>
+
+    <div class="dashboard-header">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category=='success' else 'danger' }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <h1>Welcome to Admin Dashboard</h1>
+        <p>Complete control and management of the Website</p>
+    </div>
+
+    <section class="content">
+        <div class="card glass">
+            <h5>Total Enquiries</h5>
+            <span class="icon">👥</span>
+            <p id="totalEnquiries">{{ total_enquiries }} enquiries</p>
+        </div>
+        <div class="card glass">
+            <h5> Gallery Images</h5>
+            <span class="icon">🖼️</span>
+            <p id="totalGalleryImages">{{ total_gallery_images }} images</p>
+        </div>
+        <div class="card glass">
+            <h5>Pending Orders</h5>
+            <span class="icon">🉑</span>
+            <p id="pendingOrders">{{ pending_orders }} pending</p>
+        </div>
+        <div class="card glass">
+            <h5>Total Customers</h5>
+            <span class="icon">👥</span>
+            <p id="totalCustomers">{{ total_customers }} customers</p>
+        </div>
+    </section>
+
+    <div class="admin-sections">
+        <!--Total Enquiries -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon">🗳️</div>
+                <div class="section-title">Total Enquiries</div>
+            </div>
+            <div class="section-content">
+                <ul class="action-list">
+                    <li>Recent Enquiries</li>
+                    <li>Status wise count</li>
+                    <li>View All Enquiries</li>
+                    <li>Top Requested Services</li>
+                </ul>
+            </div>
+            <button class="section-btn" onclick="openEnquiryModal()">Manage Enquiries</button>
+        </div>
+
+        <!-- Gallery Image -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon">👥</div>
+                <div class="section-title">Gallery & Media </div>
+            </div>
+            <div class="section-content">
+                <ul class="action-list">
+                    <li>View all Uploaded Images</li>
+                    <li>Add new new Images</li>
+                    <li>Delete Images</li>
+                    <li>Download Images</li>
+                </ul>
+            </div>
+            <button class="section-btn" onclick="openGalleryModal()">Manage Gallery</button>
+        </div>
+
+        <!-- Services Management -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon">🏛️</div>
+                <div class="section-title">Services</div>
+            </div>
+            <div class="section-content">
+                <ul class="action-list">
+                    <li>Add New Service</li>
+                    <li>Edit Service Detail</li>
+                    <li>Enable/Disable a Services</li>
+                    <li>Arrange Display Order</li>
+                </ul>
+            </div>
+            <button class="section-btn" onclick="openServicesModal()">Manage Services</button>
+        </div>
+
+        <!--Customer Management -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon">🛃</div>
+                <div class="section-title">Customer</div>
+            </div>
+            <div class="section-content">
+                <ul class="action-list">
+                    <li>Customer Database</li>
+                    <li>Black / Remove Customer</li>
+                    <li>Send Bulk Email / SMS</li>
+                    <li>Publish official </li>
+                </ul>
+            </div>
+            <button class="section-btn" onclick="openCustomerModal()">Manage Customers</button>
+        </div>
+
+        <!--Order/Booking Management -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon">🚚</div>
+                <div class="section-title">order / Booking</div>
+            </div>
+            <div class="section-content">
+                <ul class="action-list">
+                    <li>View All Order</li>
+                    <li>update Order Status</li>
+                    <li>Payment Track</li>
+                    <li>Invoice Download/Print</li>
+                </ul>
+            </div>
+            <button class="section-btn" onclick="openBookingModal()">Manage Orders</button>
+        </div>
+
+        <!--Setting Management -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon">🧑‍💻</div>
+                <div class="section-title">Settings</div>
+            </div>
+            <div class="section-content">
+                <ul class="action-list">
+                    <li>Change Company Info (phone,Email,Address )</li>
+                    <li>Update Pricing of Services</li>
+                    <li>Manage Payment Gateway Key</li>
+                    <li>Backup Databasee</li>
+                    <li>Restore Data</li>
+                </ul>
+            </div>
+            <button class="section-btn" onclick="openSettingModal()">Manage Settings</button>
+        </div>
+    </div>
+
+    <!-- Enquiry Management Modal -->
+    <div id="enquiryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('enquiryModal')">&times;</span>
+            <h2 class="modal-title">Enquiries Management</h2>
+            <div id="enquiryAlert"></div>
+            <div class="button-grid">
+                <button class="action-btn" onclick="loadEnquiries()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button class="action-btn" onclick="exportEnquiries()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enquiryTableBody">
+                        <!-- Enquiries will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Management Modal -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('galleryModal')">&times;</span>
+            <h2 class="modal-title">Gallery Management</h2>
+            <div id="galleryAlert"></div>
+            
+            <!-- Upload Form -->
+            <div style="margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                <h3 style="color: white; margin-bottom: 15px;">Upload New Image</h3>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="imageFile">Select Image:</label>
+                        <input type="file" id="imageFile" name="image" accept="image/*" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageCaption">Caption:</label>
+                        <input type="text" id="imageCaption" name="caption" class="form-control" placeholder="Enter image caption">
+                    </div>
+                    <div class="form-group">
+                        <label for="imageCategory">Category:</label>
+                        <input type="text" id="imageCategory" name="category" class="form-control" placeholder="Enter category">
+                    </div>
+                    <button type="submit" class="section-btn">
+                        <i class="fas fa-upload"></i> Upload Image
+                    </button>
+                </form>
+            </div>
+
+            <!-- Gallery Images -->
+            <h3 style="color: white; margin-bottom: 15px;">Gallery Images</h3>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Images will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Management Modal -->
+    <div id="servicesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('servicesModal')">&times;</span>
+            <h2 class="modal-title">Services Management</h2>
+            <div id="servicesAlert"></div>
+            
+            <!-- Add Service Form -->
+            <div style="margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                <h3 style="color: white; margin-bottom: 15px;">Add New Service</h3>
+                <form id="serviceForm">
+                    <div class="form-group">
+                        <label for="serviceTitle">Service Title:</label>
+                        <input type="text" id="serviceTitle" name="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceDescription">Description:</label>
+                        <textarea id="serviceDescription" name="description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="servicePrice">Price:</label>
+                        <input type="text" id="servicePrice" name="price" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceOrder">Display Order:</label>
+                        <input type="number" id="serviceOrder" name="display_order" class="form-control" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceImage">Product Image:</label>
+                        <input type="file" id="serviceImage" name="image" class="form-control" placeholder="Upload image of Product">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="serviceActive" name="is_active" checked> Active
+                        </label>
+                    </div>
+                    <button type="submit" class="section-btn">
+                        <i class="fas fa-plus"></i> Add Service
+                    </button>
+                </form>
+            </div>
+
+            <!-- Services List -->
+            <h3 style="color: white; margin-bottom: 15px;">Services List</h3>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Order</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicesTableBody">
+                        <!-- Services will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Management Modal -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('customerModal')">&times;</span>
+            <h2 class="modal-title">Customer Management</h2>
+            <div id="customerAlert"></div>
+            
+            <div class="button-grid">
+                <button class="action-btn" onclick="loadCustomers()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customerTableBody">
+                        <!-- Customers will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Management Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+            <h2 class="modal-title">Order Management</h2>
+            <div id="orderAlert"></div>
+            
+            <div class="button-grid">
+                <button class="action-btn" onclick="loadOrders()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Order Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody">
+                        <!-- Orders will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Management Modal -->
+    <div id="settingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('settingModal')">&times;</span>
+            <h2 class="modal-title">Settings Management</h2>
+            <div id="settingsAlert"></div>
+            
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label for="companyName">Company Name:</label>
+                    <input type="text" id="companyName" name="company_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="companyPhone">Phone:</label>
+                    <input type="text" id="companyPhone" name="company_phone" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="companyEmail">Email:</label>
+                    <input type="email" id="companyEmail" name="company_email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="companyAddress">Address:</label>
+                    <textarea id="companyAddress" name="company_address" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="paymentGateway">Payment Gateway Key:</label>
+                    <input type="text" id="paymentGateway" name="payment_gateway_key" class="form-control">
+                </div>
+                <button type="submit" class="section-btn">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+            </form>
+            
+            <div style="margin-top: 30px;">
+                <h3 style="color: white; margin-bottom: 15px;">Database Operations</h3>
+                <div class="button-grid">
+                    <button class="action-btn" onclick="backupDatabase()">
+                        <i class="fas fa-database"></i> Backup Database
+                    </button>
+                    <button class="action-btn" onclick="restoreDatabase()">
+                        <i class="fas fa-undo"></i> Restore Database
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentEditingService = null;
+
+        /* Toggle menu for mobile view */
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/admin/logout';
+            }
+        }
+
+        // Modal functions
+        function openEnquiryModal() {
+            document.getElementById('enquiryModal').style.display = 'block';
+            loadEnquiries();
+        }
+
+        function openGalleryModal() {
+            document.getElementById('galleryModal').style.display = 'block';
+            loadGallery();
+        }
+
+        function openServicesModal() {
+            document.getElementById('servicesModal').style.display = 'block';
+            loadServices();
+            currentEditingService = null;
+            document.getElementById('serviceForm').reset();
+            document.querySelector('#serviceForm button').innerHTML = '<i class="fas fa-plus"></i> Add Service';
+        }
+
+        function openCustomerModal() {
+            document.getElementById('customerModal').style.display = 'block';
+            loadCustomers();
+        }
+
+        function openBookingModal() {
+            document.getElementById('bookingModal').style.display = 'block';
+            loadOrders();
+        }
+
+        function openSettingModal() {
+            document.getElementById('settingModal').style.display = 'block';
+            loadSettings();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Show alert message
+        function showAlert(containerId, message, type) {
+            const alertDiv = document.getElementById(containerId);
+            alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                alertDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Load enquiries
+        async function loadEnquiries() {
+            try {
+                const response = await fetch('/admin/enquiries');
+                const enquiries = await response.json();
+                
+                const tableBody = document.getElementById('enquiryTableBody');
+                tableBody.innerHTML = '';
+                
+                enquiries.forEach(enquiry => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${enquiry.id}</td>
+                        <td>${enquiry.name}</td>
+                        <td>${enquiry.email}</td>
+                        <td>${enquiry.phone}</td>
+                        <td>${enquiry.message.substring(0, 50)}${enquiry.message.length > 50 ? '...' : ''}</td>
+                        <td><span class="status-${enquiry.status}">${enquiry.status}</span></td>
+                        <td>${enquiry.created_at}</td>
+                        <td class="action-buttons">
+                            <button class="btn-small btn-status" onclick="updateEnquiryStatus(${enquiry.id}, 'replied')">Replied</button>
+                            <button class="btn-small btn-status" onclick="updateEnquiryStatus(${enquiry.id}, 'closed')">Close</button>
+                            <button class="btn-small btn-delete" onclick="deleteEnquiry(${enquiry.id})">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading enquiries:', error);
+                showAlert('enquiryAlert', 'Error loading enquiries', 'danger');
+            }
+        }
+
+        // Update enquiry status
+        async function updateEnquiryStatus(enquiryId, status) {
+            try {
+                const response = await fetch(`/admin/enquiries/${enquiryId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                if (response.ok) {
+                    showAlert('enquiryAlert', 'Enquiry status updated successfully', 'success');
+                    loadEnquiries();
+                } else {
+                    throw new Error('Failed to update enquiry');
+                }
+            } catch (error) {
+                console.error('Error updating enquiry:', error);
+                showAlert('enquiryAlert', 'Error updating enquiry', 'danger');
+            }
+        }
+
+        // Delete enquiry
+        async function deleteEnquiry(enquiryId) {
+            if (confirm('Are you sure you want to delete this enquiry?')) {
+                try {
+                    const response = await fetch(`/admin/enquiries/${enquiryId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        showAlert('enquiryAlert', 'Enquiry deleted successfully', 'success');
+                        loadEnquiries();
+                    } else {
+                        throw new Error('Failed to delete enquiry');
+                    }
+                } catch (error) {
+                    console.error('Error deleting enquiry:', error);
+                    showAlert('enquiryAlert', 'Error deleting enquiry', 'danger');
+                }
+            }
+        }
+
+        // Load gallery images
+        async function loadGallery() {
+            try {
+                const response = await fetch('/admin/gallery');
+                const images = await response.json();
+                
+                const galleryGrid = document.getElementById('galleryGrid');
+                galleryGrid.innerHTML = '';
+                
+                images.forEach(image => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.innerHTML = `
+                        <img src="/static/uploads/${image.filename}" alt="${image.caption}">
+                        <div class="gallery-actions">
+                            <span>${image.caption || 'No caption'}</span>
+                            <button class="btn-small btn-delete" onclick="deleteGalleryImage(${image.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    galleryGrid.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+                showAlert('galleryAlert', 'Error loading gallery images', 'danger');
+            }
+        }
+
+        // Gallery upload form handler
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch('/admin/gallery', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    showAlert('galleryAlert', 'Image uploaded successfully', 'success');
+                    this.reset();
+                    loadGallery();
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to upload image');
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                showAlert('galleryAlert', error.message || 'Error uploading image', 'danger');
+            }
+        });
+
+        // Delete gallery image
+        async function deleteGalleryImage(imageId) {
+            if (confirm('Are you sure you want to delete this image?')) {
+                try {
+                    const response = await fetch(`/admin/gallery/${imageId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        showAlert('galleryAlert', 'Image deleted successfully', 'success');
+                        loadGallery();
+                    } else {
+                        throw new Error('Failed to delete image');
+                    }
+                } catch (error) {
+                    console.error('Error deleting image:', error);
+                    showAlert('galleryAlert', 'Error deleting image', 'danger');
+                }
+            }
+        }
+
+        // Load services
+        async function loadServices() {
+            try {
+                const response = await fetch('/admin/services');
+                const services = await response.json();
+                
+                const tableBody = document.getElementById('servicesTableBody');
+                tableBody.innerHTML = '';
+                
+                services.forEach(service => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${service.id}</td>
+                        <td>${service.title}</td>
+                        <td>${service.description ? service.description.substring(0, 50) + (service.description.length > 50 ? '...' : '') : ''}</td>
+                        <td>${service.price || 'N/A'}</td>
+                        <td>${service.is_active ? 'Active' : 'Inactive'}</td>
+                        <td>${service.display_order}</td>
+                        <td>${service.image ? `<img src="/static/uploads/${service.image}" alt="${service.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">` : 'No Image'}</td>
+                        <td class="action-buttons">
+                            <button class="btn-small btn-edit" onclick="editService(${service.id})">Edit</button>
+                            <button class="btn-small btn-delete" onclick="deleteService(${service.id})">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading services:', error);
+                showAlert('servicesAlert', 'Error loading services', 'danger');
+            }
+        }
+
+        // Service form handler 
+        document.getElementById('serviceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Frontend validation
+            const title = document.getElementById('serviceTitle').value.trim();
+            if (!title) {
+                showAlert('servicesAlert', 'Service title is required', 'danger');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('description', document.getElementById('serviceDescription').value);
+            formData.append('price', document.getElementById('servicePrice').value);
+            
+            // Convert display_order to integer
+            const displayOrder = parseInt(document.getElementById('serviceOrder').value) || 0;
+            formData.append('display_order', displayOrder.toString());
+            
+            // Checkbox value - convert to string 'true'/'false'
+            const isActive = document.getElementById('serviceActive').checked;
+            formData.append('is_active', isActive.toString());
+            
+            // Append image file if selected
+            const imageInput = document.getElementById('serviceImage');
+            if (imageInput.files[0]) {
+                formData.append('image', imageInput.files[0]);
+            }
+            
+            console.log('Sending FormData with image:', imageInput.files[0]); // Debug
+            
+            try {
+                let response;
+                if (currentEditingService) {
+                    // Update existing service with FormData
+                    response = await fetch(`/admin/services/${currentEditingService}`, {
+                        method: 'PUT',
+                        body: formData  // No Content-Type header for FormData
+                    });
+                } else {
+                    // Create new service with FormData
+                    response = await fetch('/admin/services', {
+                        method: 'POST',
+                        body: formData  // No Content-Type header for FormData
+                    });
+                }
+                
+                if (response.ok) {
+                    showAlert('servicesAlert', `Service ${currentEditingService ? 'updated' : 'created'} successfully`, 'success');
+                    this.reset();
+                    loadServices();
+                    currentEditingService = null;
+                    document.querySelector('#serviceForm button').innerHTML = '<i class="fas fa-plus"></i> Add Service';
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to save service');
+                }
+            } catch (error) {
+                console.error('Error saving service:', error);
+                showAlert('servicesAlert', error.message || 'Error saving service', 'danger');
+            }
+        });
+
+        // Edit service
+        async function editService(serviceId) {
+            try {
+                const response = await fetch('/admin/services');
+                const services = await response.json();
+                const service = services.find(s => s.id === serviceId);
+                
+                if (service) {
+                    document.getElementById('serviceTitle').value = service.title;
+                    document.getElementById('serviceDescription').value = service.description || '';
+                    document.getElementById('servicePrice').value = service.price || '';
+                    document.getElementById('serviceOrder').value = service.display_order;
+                    document.getElementById('serviceImage').value = service.image || '';
+                    document.getElementById('serviceActive').checked = service.is_active;
+                    
+                    currentEditingService = serviceId;
+                    document.querySelector('#serviceForm button').innerHTML = '<i class="fas fa-save"></i> Update Service';
+                }
+            } catch (error) {
+                console.error('Error loading service for edit:', error);
+                showAlert('servicesAlert', 'Error loading service details', 'danger');
+            }
+        }
+
+        // Delete service
+        async function deleteService(serviceId) {
+            if (confirm('Are you sure you want to delete this service?')) {
+                try {
+                    const response = await fetch(`/admin/services/${serviceId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        showAlert('servicesAlert', 'Service deleted successfully', 'success');
+                        loadServices();
+                    } else {
+                        throw new Error('Failed to delete service');
+                    }
+                } catch (error) {
+                    console.error('Error deleting service:', error);
+                    showAlert('servicesAlert', 'Error deleting service', 'danger');
+                }
+            }
+        }
+
+        // Load customers
+        async function loadCustomers() {
+            try {
+                const response = await fetch('/admin/customers');
+                const customers = await response.json();
+                
+                const tableBody = document.getElementById('customerTableBody');
+                tableBody.innerHTML = '';
+                
+                customers.forEach(customer => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${customer.id}</td>
+                        <td>${customer.name}</td>
+                        <td>${customer.email || 'N/A'}</td>
+                        <td>${customer.phone || 'N/A'}</td>
+                        <td>${customer.address ? customer.address.substring(0, 30) + (customer.address.length > 30 ? '...' : '') : 'N/A'}</td>
+                        <td>${customer.is_blacklisted ? 'Blacklisted' : 'Active'}</td>
+                        <td>${customer.created_at}</td>
+                        <td class="action-buttons">
+                            <button class="btn-small ${customer.is_blacklisted ? 'btn-status' : 'btn-delete'}" 
+                                    onclick="toggleBlacklistCustomer(${customer.id})">
+                                ${customer.is_blacklisted ? 'Remove Blacklist' : 'Blacklist'}
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading customers:', error);
+                showAlert('customerAlert', 'Error loading customers', 'danger');
+            }
+        }
+
+        // Toggle customer blacklist status
+        async function toggleBlacklistCustomer(customerId) {
+            try {
+                const response = await fetch(`/admin/customers/${customerId}/blacklist`, {
+                    method: 'PUT'
+                });
+                
+                if (response.ok) {
+                    showAlert('customerAlert', 'Customer status updated successfully', 'success');
+                    loadCustomers();
+                } else {
+                    throw new Error('Failed to update customer status');
+                }
+            } catch (error) {
+                console.error('Error updating customer status:', error);
+                showAlert('customerAlert', 'Error updating customer status', 'danger');
+            }
+        }
+
+        // Load orders
+        async function loadOrders() {
+            try {
+                const response = await fetch('/admin/orders');
+                const orders = await response.json();
+                
+                const tableBody = document.getElementById('orderTableBody');
+                tableBody.innerHTML = '';
+                
+                orders.forEach(order => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${order.id}</td>
+                        <td>${order.customer_name}</td>
+                        <td>${order.service_title}</td>
+                        <td>${order.order_date}</td>
+                        <td>${order.total_amount || 'N/A'}</td>
+                        <td><span class="status-${order.status}">${order.status}</span></td>
+                        <td class="action-buttons">
+                            <select onchange="updateOrderStatus(${order.id}, this.value)" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 5px; border-radius: 5px;">
+                                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                                <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+                                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                showAlert('orderAlert', 'Error loading orders', 'danger');
+            }
+        }
+
+        // Update order status
+        async function updateOrderStatus(orderId, status) {
+            try {
+                const response = await fetch(`/admin/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                if (response.ok) {
+                    showAlert('orderAlert', 'Order status updated successfully', 'success');
+                    loadOrders();
+                } else {
+                    throw new Error('Failed to update order status');
+                }
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                showAlert('orderAlert', 'Error updating order status', 'danger');
+            }
+        }
+
+        // Load settings
+        async function loadSettings() {
+            try {
+                const response = await fetch('/admin/settings');
+                const settings = await response.json();
+                
+                // Populate form fields
+                document.getElementById('companyName').value = settings.company_name || '';
+                document.getElementById('companyPhone').value = settings.company_phone || '';
+                document.getElementById('companyEmail').value = settings.company_email || '';
+                document.getElementById('companyAddress').value = settings.company_address || '';
+                document.getElementById('paymentGateway').value = settings.payment_gateway_key || '';
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                showAlert('settingsAlert', 'Error loading settings', 'danger');
+            }
+        }
+
+        // Settings form handler
+        document.getElementById('settingsForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                company_name: document.getElementById('companyName').value,
+                company_phone: document.getElementById('companyPhone').value,
+                company_email: document.getElementById('companyEmail').value,
+                company_address: document.getElementById('companyAddress').value,
+                payment_gateway_key: document.getElementById('paymentGateway').value
+            };
+            
+            try {
+                const response = await fetch('/admin/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    showAlert('settingsAlert', 'Settings saved successfully', 'success');
+                } else {
+                    throw new Error('Failed to save settings');
+                }
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showAlert('settingsAlert', 'Error saving settings', 'danger');
+            }
+        });
+
+        // Backup database (placeholder)
+        function backupDatabase() {
+            alert('Database backup functionality would be implemented here. This might involve creating a SQL dump file or copying the database file.');
+        }
+
+        // Restore database (placeholder)
+        function restoreDatabase() {
+            alert('Database restore functionality would be implemented here. This would require uploading a backup file and restoring the database from it.');
+        }
+
+        // Export enquiries (placeholder)
+        function exportEnquiries() {
+            alert('Export functionality would be implemented here. This might export data to CSV or Excel format.');
+        }
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Any initialization code can go here
+        });
+    </script>
+</body>
+</html>

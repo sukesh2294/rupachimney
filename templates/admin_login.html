@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Admin Login</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f0f23 60%, #2d1810 100%);
+            min-height: 100vh;
+            color: white;
+        }
+         #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            
+        }
+        
+        header {
+            padding: 0.5rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .menu-icon{
+            display: none;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            margin: 0;
+            padding: 0;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo img{
+            width: 45px;
+            height: auto;
+            padding: 0;
+            margin: 0;
+            margin-right: 25px;
+            display: block;
+            float: left;
+            border-radius: 5px;
+        }
+        .logo p{
+            font-size: 1rem;
+            color: #a2d2f2;
+            text-align: center;
+            padding-left: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(231, 76, 60, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .admin-name {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .login-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.1;
+        }
+
+        .grid-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(231, 76, 60, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(231, 76, 60, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 140, 66, 0.08);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .shape2 { top: 60%; left: 80%; animation-delay: 2s; }
+        .shape3 { top: 80%; left: 20%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+      
+        .login-content {
+            width: 90%;
+            max-width: 600px;
+            margin: 11.5rem auto 2rem auto;
+            padding: 3rem;
+        }
+
+        h1{
+            text-align: center;
+            margin-bottom: 5rem ;
+            color: #0044ff;
+            text-shadow: 0 0 5px rgba(255, 238, 0, 0.904), 0 0 10px rgba(0, 255, 0, 0.729), 0 0 15px rgba(0, 255, 0, 0.658);
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            
+        }
+        .btn[type="reset"]{
+            float: right;
+    
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .username, .password {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 0;
+            }
+            .menu-icon{
+                display: block;
+                position: absolute;
+                right: 1rem;
+                font-size: 1.7rem;
+
+            }
+            .nav-links{
+                display: none;
+            }
+            .nav-links.active{
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100px;
+                background-color: #072370c1;
+            }
+            .login-content {
+                width: 95%;
+                padding: 2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <header class="glass">
+        <nav>    
+            <div class="logo"><img src="/static/chimney.JPG" alt="Logo" > Rupa Chimney <br><p>Sikandra, Jamui (811315)</p></div>
+            <div class="nav-links">
+                <a href="index.html">🏠Home</a>
+                <a href="/about">About</a>
+                <a href="/service">Service</a>
+                <a href="#contact">Contact Us</a>
+                <div class="admin-info">
+                    <span>👤</span>
+                    <span class="admin-name" id="adminName">Administrator</span>
+                    <button class="login-btn" onclick="window.location.href='/admin/login'">Login</button>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="toggleMenu()" ><i class="fa-solid fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <div class="login-content glass">
+            <h1>Admin Login</h1>
+         
+            <form method="POST" class="loginForm">
+                <div class="username">
+                    <label for="username">User Name</label>
+                    <input type="email"  id="username" name="username" placeholder="Enter your email" required>
+                </div>
+                <div class="password">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+        
+                <div class="auth-buttons">
+                    <button type="submit"  class="btn btn-primary" onclick="login()">Login →</button> 
+                    <button type="reset"   class="btn btn-secondary"> Reset </button> 
+                </div>
+            </form>
+    </div>
+    
+
+
+        <!-- Load particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Configure particles -->
+    <script>
+    particlesJS("particles-js", {
+    "particles": {
+        "number": {
+        "value": 100
+        },
+        "size": {
+        "value": 3
+        },
+        "line_linked": {
+        "enable": true
+        },
+        "move": {
+        "speed": 1
+        }
+    }
+    });
+
+           // Toggle menu for mobile view
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        function login(){
+            document.getElementById("loginForm").submit();
+
+        }
+    </script>
+</body>
+</html>
