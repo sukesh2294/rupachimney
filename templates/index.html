@@ -6,9 +6,17 @@
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <title>Rupa Chimney</title>
     <style>
+         :root {
+          --primary: #1a46e0;
+            --secondary: #ff6b00;
+            --light: #f4f4f413;
+            --dark: #121212;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -37,7 +45,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            height: 6.5rem;
+            height: 7rem;
             z-index: 1000;
             transition: all 0.3s ease;
         }
@@ -65,7 +73,7 @@
 
         .logo img{
             width: auto;
-            max-height: 5rem;
+            height: 5.5rem;
             padding: 0;
             margin: 0;
             margin-right: 1.5rem;
@@ -85,7 +93,16 @@
             display: flex;
             gap: 2rem;
             align-items: center;
+            font-size: 1.6rem;
         }
+        .close-icon {
+            font-size: 30px;
+            cursor: pointer;
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            }
 
         .nav-links a {
             color: white;
@@ -96,6 +113,7 @@
 
         .nav-links a:hover {
             text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            color:#a2d2f2;
         }
         .admin-info {
             display: flex;
@@ -218,7 +236,8 @@
         }
          .imgSlider{
             width: 100%;
-            height: 100%;
+            max-height:80vh;
+            min-height: 80vh;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0,0,0, 0.2);
         }
@@ -228,6 +247,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border: 1px solid #e74c3c;
         }
         .imgSlider img.active{
             display: block;
@@ -450,7 +470,7 @@
             margin-top: 2px;
             margin-left: 30%;
             padding: 8px 20px;
-            background: #007BFF;
+            background: rgba(28, 160, 248, 1);;
             color: #fff;
             text-decoration: none;
             border-radius: 25px;
@@ -486,6 +506,7 @@
         /* Abot Rupa Chimney */
         .aboutRupachimney{
             width: 40%;
+            margin: 2rem ;
             padding: 4rem 1.5rem;
             text-align: center;
         }
@@ -653,6 +674,112 @@
             text-align: center;
         }
 
+        .testimonials {
+            padding: 0;
+            text-align: center;
+            }
+
+            .slider {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            margin-top: 2rem;
+            }
+
+            .slider-track {
+            display: flex;
+            gap: 20px;
+            }
+
+            .slide {
+            min-width: 28rem;
+            min-height:20rem;
+            background: rgba(82, 80, 80, 0.45);
+            backdrop-filter: blur(8px);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            opacity: 0.6;
+            transform: scale(0.9);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid rgba(54, 127, 176, 1);
+            }
+
+
+             /* Testimonials */
+            .testimonials-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            
+            .testimonial-card {
+                background: var(--light);
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            }
+            
+            .testimonial-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            
+            .testimonial-avatar {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: var(--primary);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: 1.5rem;
+                margin-right: 15px;
+            }
+            
+            .testimonial-rating {
+                color: #FFC107;
+                margin-bottom: 10px;
+            }
+
+            .slide.active {
+            opacity: 1;
+            transform: scale(1.08);
+            }
+
+            .slide h4 {
+            color: #107cc5ff;
+            margin-bottom: 5px;
+            }
+
+            .slide p {
+            margin-top: 15px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            }
+
+            /* Mobile */
+            @media (max-width: 768px) {
+
+
+                .slide {
+                    min-width: 80%;
+                    padding: 10px;
+                    opacity: 1;
+                }
+            
+                .slide:hover {
+                    transform: scale(1);
+                    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+                }
+
+            }
+
+
 
         
         /* Footer Styles */
@@ -677,7 +804,7 @@
         .footer-section h3 {
             color: white;
             margin-bottom: 15px;
-            font-size: 1.2em;
+            font-size: 1.6em;
         }
 
         .footer-section p, .footer-section a {
@@ -686,6 +813,7 @@
             line-height: 1.6;
             margin-bottom: 8px;
             display: block;
+            font-size: 1.2em;
         }
 
         .footer-section a:hover {
@@ -696,8 +824,10 @@
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 20px;
+            margin-bottom: 80px;
             text-align: center;
             color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2em;
         }
 
         .footer-bottom p {
@@ -742,10 +872,14 @@
             header{
                 padding: 0;
                 margin: 0;
+                height: 5.5rem;
+                display: flex;
+                align-items: center;
+                position: fixed;
             }
             nav{
                 margin: 0;
-                padding: 1rem;
+                padding: 4px;
                 text-align: center;
             }
             .logo{
@@ -756,6 +890,7 @@
                 margin: 0 ;
                 margin-right: 10px;
                 padding: 0;
+                height: 5rem;
             }
             .menu-icon{
                 display: flex;
@@ -763,17 +898,37 @@
                 right: 2px;
                 
             }
+            .close-icon {
+                display: block;
+                color: red;
+                font-size: 3rem;
+                top:0;
+            }
             .nav-links{
                 display: none;
+
             }
             .nav-links.active{
+                position: fixed;
+                top: 0;
                 display: flex;
                 flex-direction: column;
                 position: absolute;
-                top: 6.8rem;
+                top: 5rem;
                 width: 100%;
-                margin-right: 2rem;
-                background-color: rgba(3, 13, 52, 0.92);
+                margin: 0;
+                padding: 0;
+                padding-bottom: 2rem;
+                background-color: rgba(0, 11, 57, 1);
+                gap: 4px;
+                z-index: 9999;
+                
+            }
+            .nav-links.active a{
+                padding-top: 2rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                gap:0 ;
+                font-size: 1.2rem;
             }
 
             section{
@@ -804,6 +959,13 @@
                 font-size: 1.8rem;
                 margin-bottom: 0.5rem;
             }
+            .hero-content .details input, .hero-content .details textarea {
+                width: 95%;
+                font-size: 1.5rem;
+            }
+            .hero-content{
+                padding-bottom: 1rem;
+            }
             .aboutUs{
                 flex-direction: column;
                 width: 100%;
@@ -814,13 +976,13 @@
             }
             .card{
                 width: 20rem;
-                 height: 25rem;
+                height: 25rem;
                 margin: 0 auto;   
             }
             .aboutRupachimney{
-                width: 90%;
-                margin: 0 auto;
-                padding: 0 .5rem;
+                width: 100%;
+                margin: 2rem 0;
+                padding: 1rem;
             }
         
             .aboutRupachimney p{
@@ -855,8 +1017,9 @@
 
     <header class="glass">
         <nav>    
-         <span class="logo"><img src="/static/chimney.jpg" alt="Logo"> Rupa Chimney <br><p>Sikandra, Jamui (811315)</p></span>
-            <div class="nav-links">
+         <span class="logo"><img src="/static/rupachimneylogo.png" alt="Logo"> Rupa Chimney <br><p>Sikandra, Jamui (811315)</p></span>
+            <div class="nav-links" id="navLinks">
+                <span class="close-icon" onclick="toggleMenu()">&times;</span>
                 <a href="/">🏠Home</a>
                 <a href="/about">About</a>
                 <a href="/service">Service</a>
@@ -868,6 +1031,7 @@
                 </div>
             </div>
             <div class="menu-icon" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+            
         </nav>
     </header>
 
@@ -984,7 +1148,7 @@
             </h1>
             <p style="max-width: 56.3rem; margin: auto; font-size: 18px; line-height: 1.8; color: #c2bebe; text-align: left;">
                 <strong>Rupa Chimney</strong> एक प्रतिष्ठित ईंट निर्माण कंपनी है, जो <strong>Nawada Road, Sikandra, Bihar (Pin Code: 811315)</strong> में स्थित है। 
-                हम <strong>1998 </strong> से लगातार उच्च गुणवत्ता वाली <strong> fire bricks</strong>, <strong>refractory bricks</strong>, और 
+                हम <strong>2000</strong> से लगातार उच्च गुणवत्ता वाली <strong> fire bricks</strong>, <strong>refractory bricks</strong>, और 
                 <strong>industrial chimneys</strong> का निर्माण कर रहे हैं। हमारे उत्पाद विशेष रूप से 
                 <em>high-temperature resistance</em>, durability और cost-efficiency के लिए जाने जाते हैं।<br><br>
 
@@ -1023,6 +1187,154 @@
         The displayed price is only for bricks. Transportation (gari bhada) will be charged separately as per delivery location.
     </p></marquee>
     </div>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2>Trusted Customers of Rupa Chimney</h2>
+            <p>Sikandra, Jamui, Bihar – 811315</p>
+
+            <div class="slider">
+                <div class="slider-track">
+
+                    <div class="slide">
+                        <div class="testimonial-card glass">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h3>Sarah Johnson</h3>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p>"Mazboot aur uniform bricks, Jamui me best quality. Excellent service and timely delivery."</p>
+                        
+                    </div>
+                    <div class="slide">
+                        <div class="testimonial-card glass">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h3>Pankaj Kumar</h3>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <p>Jamui aur aas-paas ke area ke liye best choice hai.</p>
+                        
+                    </div>
+
+                    <div class="slide">
+                        <div class="testimonial-card glass">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h3>Subodh Yadav</h3>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <p>“We used Rupa Chimney bricks for our house construction. The finishing is excellent and the walls feel very solid.”</p>
+                        
+                    </div>
+
+                    <div class="slide">
+                        <div class="testimonial-card glass">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h3>Ajay Singh</h3>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <p>“We used Rupa Chimney bricks for our house construction. The finishing is excellent and the walls feel very solid.”</p>
+                        
+                    </div>
+                    <div class="slide">
+                        <div class="testimonial-card glass">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h3>Nawal Kumar Yadav</h3>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <p>“Large construction projects ke liye trusted bricks.”</p>
+                        
+                    </div>
+
+                    <div class="slide">
+                        <div class="testimonial-card glass">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h3>Ramesh Prasad</h3>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <p>“High demand kyunki quality consistent hoti hai.”</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </section>
+
+
 
     <!-- Service Enquiry Modal -->
     <div id="serviceModal" class="modal">
@@ -1110,17 +1422,9 @@
         
         <div class="footer-bottom">
             <p>&copy; 2025 Rupa Chimney. All rights reserved.</p>
-            <p>Developed by SUKESH KUMAR </p>
+            <p>Developed by <b>SUKESH KUMAR </b> <span style=" font-size: 30px; margin-left:15px"> <a href="https://sukeshportfolio.netlify.app/">↗️ </a> </p>
             <p>Secured with Multi-layer PROTECTION</p>
             
-            <div class="social-links">
-                <a href="rupachimney.facebook.com" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://wa.me/916299924802" title="watsapp"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
         </div>
     </footer>
 
@@ -1274,5 +1578,54 @@
             once: true
         });
     </script>
+
+
+    <script>
+        const track = document.querySelector('.slider-track');
+        let slides = document.querySelectorAll('.slide');
+
+        // Clone slides for infinite loop
+        slides.forEach(slide => {
+            const clone = slide.cloneNode(true);
+            track.appendChild(clone);
+        });
+
+        slides = document.querySelectorAll('.slide');
+
+        let index = 0;
+        let slideWidth = slides[0].offsetWidth + 20;
+        let speed = 0.5; // smaller = slower
+        let position = 0;
+
+        function animate() {
+            position -= speed;
+            track.style.transform = `translateX(${position}px)`;
+
+            // reset position when half crossed
+            if (Math.abs(position) >= slideWidth * (slides.length / 2)) {
+            position = 0;
+            }
+
+            // active center slide
+            const centerIndex = Math.round(Math.abs(position) / slideWidth) + 2;
+            slides.forEach(s => s.classList.remove('active'));
+            if (slides[centerIndex]) slides[centerIndex].classList.add('active');
+
+            requestAnimationFrame(animate);
+        }
+
+        // Pause on hover
+        track.addEventListener('mouseenter', () => speed = 0);
+        track.addEventListener('mouseleave', () => speed = 0.5);
+
+        window.addEventListener('resize', () => {
+            slideWidth = slides[0].offsetWidth + 20;
+        });
+
+        animate();
+        </script>
+
+
+    
 </body>
 </html>
